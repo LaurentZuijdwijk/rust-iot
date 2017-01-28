@@ -1,6 +1,6 @@
 extern crate ws;
 
-use self::ws::{Handler, Sender, Result, Message, Handshake, CloseCode, Error, Settings};
+use self::ws::{Handler, Sender, Result, Message, Handshake, CloseCode, Error};
 use std::sync::{Arc, Mutex};
 use std::collections::HashMap;
 
@@ -22,8 +22,8 @@ impl HasBroadcast for Server {
         for (key, client) in self.clients.lock().unwrap().iter(){
         	if *key != self.id {
 	        	// println!("{:?} {:?}", *key, self.id);
-	        	client.send(msg.clone());
-	        	client.send(format!("hello {} from {}",key, &self.id));
+	        	client.send(msg.clone()).unwrap();
+	        	client.send(format!("hello {} from {}",key, &self.id)).unwrap();
        		}
         }
         return Ok(());
@@ -38,14 +38,14 @@ pub fn create() {
   let uuid = Rc::new(Cell::new(100));
   let map:HashMap<u32, Sender> = HashMap::new();
   let mutex_map = Arc::new(Mutex::new(map));
-  ws::Settings.max_connections = 200;
+
   let ws = ws::listen("0.0.0.0:3012", |out| {
   	uuid.set(uuid.get()+1);
     let id = uuid.get();
 
   	 Server { out: out, count: count.clone(), clients:mutex_map.clone(), id:id }
   }).unwrap();
-
+  return ws;
 } 
 
 
