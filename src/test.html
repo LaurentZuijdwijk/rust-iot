@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body >
+<div id="app" ></div>
+
+<script type="text/javascript">
+	window.onload = function(){
+
+for (let i = 100 - 1; i >= 0; i--) {
+
+		let ws = new WebSocket('ws://192.168.0.9:3012/')
+		ws.onopen = function(){
+			console.log('connected')
+			let msg = {
+			    type: "message",
+			    text: 'document.getElementById("text").value',
+			    id:   'clientID'+Math.random(),
+			    date: Date.now()
+			};
+			ws.send(JSON.stringify(msg));
+			setInterval(function(){			ws.send(JSON.stringify(msg));
+},1000)
+		}
+
+
+		ws.onmessage = function(msg){
+			// let txt = document.getElementById('app').innerHTML;
+			var txt = txt+'<br />'+ msg.data;
+			// document.getElementById('app').innerHTML = txt;
+			// console.log(arguments)
+		}
+}
+
+	}
+
+</script>
+
+</body>
+</html>
