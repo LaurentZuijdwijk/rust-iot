@@ -5,3 +5,4 @@ authors = ["Laurent Zuijdwijk <you@example.com>"]
 
 [dependencies]
 ws = "*"
+cupi = "*"

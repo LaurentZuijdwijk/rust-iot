@@ -9,7 +9,6 @@
 <script type="text/javascript">
 	window.onload = function(){
 
-for (let i = 100 - 1; i >= 0; i--) {
 
 		let ws = new WebSocket('ws://192.168.0.9:3012/')
 		ws.onopen = function(){
@@ -21,11 +20,8 @@ for (let i = 100 - 1; i >= 0; i--) {
 			    date: Date.now()
 			};
 			ws.send(JSON.stringify(msg));
-			setInterval(function(){			ws.send(JSON.stringify(msg));
-},1000)
-		}
-
-
+	ws.send(JSON.stringify(msg));
+		
 		ws.onmessage = function(msg){
 			// let txt = document.getElementById('app').innerHTML;
 			var txt = txt+'<br />'+ msg.data;
