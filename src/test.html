@@ -10,7 +10,7 @@
 	window.onload = function(){
 
 
-		let ws = new WebSocket('ws://192.168.0.9:3012/')
+		let ws = new WebSocket('ws://127.0.0.1:3012/')
 		ws.onopen = function(){
 			console.log('connected')
 			let msg = {
@@ -20,13 +20,14 @@
 			    date: Date.now()
 			};
 			ws.send(JSON.stringify(msg));
-	ws.send(JSON.stringify(msg));
-		
+			setTimeout(function(){
+				ws.send(JSON.stringify(msg));
+			}, 1000);
 		ws.onmessage = function(msg){
 			// let txt = document.getElementById('app').innerHTML;
 			var txt = txt+'<br />'+ msg.data;
-			// document.getElementById('app').innerHTML = txt;
-			// console.log(arguments)
+			document.getElementById('app').innerHTML = txt;
+			console.log(arguments)
 		}
 }
 
